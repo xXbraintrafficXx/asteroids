@@ -30,12 +30,13 @@ def main():
 
 		screen.fill((0,0,0)) #rgb tuple for color, white would use 255
 		player.draw(screen)
+		player.update(dt)
 
 		pygame.display.flip()
 
 		 #set dps to reduce overloading resources, cpu was at 100% w/out
 		dt = (dps_clock.tick(60) / 1000) 
-		#return dt
+		
 	pygame.quit() 
 
 if __name__ == "__main__":
