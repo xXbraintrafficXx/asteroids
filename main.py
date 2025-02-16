@@ -18,6 +18,9 @@ def main():
 	dps_clock = pygame.time.Clock()
 	dt  = 0 #delta time
 
+	updatable = pygame.sprite.Group()
+	drawable = pygame.sprite.Group()
+	Player.containers = (updatable, drawable)
 
 	x = SCREEN_WIDTH / 2
 	y = SCREEN_HEIGHT / 2
@@ -29,8 +32,11 @@ def main():
 				return
 
 		screen.fill((0,0,0)) #rgb tuple for color, white would use 255
-		player.draw(screen)
-		player.update(dt)
+		
+		for obj in drawable: #draw player & other objects in group
+			obj.draw(screen) 
+		for obj in updatable: #update player & other objects in group
+			obj.update(dt)
 
 		pygame.display.flip()
 
