@@ -1,10 +1,12 @@
 # this allows us to use code from
 # the open-source pygame library
 # throughout this file
-import pygame
+import pygame, sys
 from constants import *
 from circleshape import CircleShape
 from player import Player
+from asteroid import Asteroid
+from asteroidfield import AsteroidField
 
 
 def main():
@@ -18,13 +20,19 @@ def main():
 	dps_clock = pygame.time.Clock()
 	dt  = 0 #delta time
 
+	#create and assign groups
 	updatable = pygame.sprite.Group()
 	drawable = pygame.sprite.Group()
+	asteroids = pygame.sprite.Group()
 	Player.containers = (updatable, drawable)
+	Asteroid.containers = (asteroids, updatable, drawable)
+	AsteroidField.containers = (updatable)
 
 	x = SCREEN_WIDTH / 2
 	y = SCREEN_HEIGHT / 2
 	player = Player(x,y,PLAYER_RADIUS)
+	asteroidfield = AsteroidField()
+
 
 	while True:
 		for event in pygame.event.get():
@@ -37,6 +45,10 @@ def main():
 			obj.draw(screen) 
 		for obj in updatable: #update player & other objects in group
 			obj.update(dt)
+
+		for obj in asteroids:
+			if player.collides(obj):
+				sys.exit("Game over!")
 
 		pygame.display.flip()
 
