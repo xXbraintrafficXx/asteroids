@@ -49,8 +49,12 @@ def main():
 			obj.update(dt)
 
 		for obj in asteroids:
-			if player.collides(obj):
+			if player.collides(obj): #asternoid kills player
 				sys.exit("Game over!")
+			for shot in shots:
+				if shot.collides(obj): #player shot kills asteroid
+					obj.kill()
+					shot.kill()
 
 		pygame.display.flip()
 
